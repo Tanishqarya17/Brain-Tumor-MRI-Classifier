@@ -333,7 +333,7 @@ To skip training: download stage2_best.pt from the Hugging Face Space files tab,
 
 - GitHub: [@Tanishqarya17](https://github.com/Tanishqarya17)
 - Email: [tanishqarya789@gmail.com](mailto:tanishqarya789@gmail.com)
-- LinkedIn: *[add your LinkedIn URL here]*
+- LinkedIn: [@TanishqArya](https://www.linkedin.com/in/tanishq-arya-b10598292/)
 
 ---
 
