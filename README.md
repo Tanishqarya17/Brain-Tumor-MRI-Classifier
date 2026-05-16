@@ -281,7 +281,6 @@ brain-tumor-mri-classifier/
     ├── failure analysis plots
     ├── per_class_metrics.csv, evaluation_summary.txt
     └── screenshots/
-
 ---
 
 ## How to Reproduce
