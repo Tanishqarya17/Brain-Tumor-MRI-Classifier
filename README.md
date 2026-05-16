@@ -292,11 +292,16 @@ brain-tumor-mri-classifier/
 
 └── outputs/
 
-    ├── training curves, confusion matrices, ROC curves
-    ├── Grad-CAM visualizations
-    ├── failure analysis plots
-    ├── per_class_metrics.csv, evaluation_summary.txt
-    └── screenshots/          Live demo screenshots
+│    ├── training curves, confusion matrices, ROC curves
+
+│    ├── Grad-CAM visualizations
+    
+│    ├── failure analysis plots
+    
+│    ├── per_class_metrics.csv, evaluation_summary.txt
+    
+│    └── screenshots/
+
 ---
 
 ## How to Reproduce
