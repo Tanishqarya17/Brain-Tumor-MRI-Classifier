@@ -268,7 +268,7 @@ brain-tumor-mri-classifier/
 ├── app.py                    Gradio demo application
 │
 ├── notebooks/
-│   └── brain_tumor_full_pipeline.ipynb
+│   └── brain_tumor_full_pipeline.ipynb   End-to-end notebook
 │
 ├── src/
 │   ├── dataset.py            Dataset class and image transforms
@@ -280,7 +280,7 @@ brain-tumor-mri-classifier/
     ├── Grad-CAM visualizations
     ├── failure analysis plots
     ├── per_class_metrics.csv, evaluation_summary.txt
-    └── screenshots/
+    └── screenshots/          Live demo screenshots
 ---
 
 ## How to Reproduce
