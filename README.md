@@ -216,7 +216,18 @@ The model shows reasonable confidence calibration. Average confidence on correct
 
 ## Interpretability (Grad-CAM)
 
-*Coming soon -- Day 8 of the project plan. This section will show heatmap overlays demonstrating where the model attends when making predictions, including both correct cases and failure cases.*
+To verify the model classifies based on genuine tumor features rather than dataset shortcuts (scanner artifacts, watermarks, positioning), Grad-CAM (Gradient-weighted Class Activation Mapping) was applied. Grad-CAM produces a heatmap highlighting the image regions that most influenced a prediction.
+![Grad-CAM overview](outputs/gradcam_overview.png)
+### What the heatmaps show
+Grad-CAM localization quality varies by class:
+- Meningioma — strongest localization. Heatmaps land directly on the tumor region. This is notable because meningioma is also the model's hardest class — even when it misclassifies, it is generally looking at the right place.
+- Pituitary — tight, small heatmaps. Attention concentrates on the small sellar region where pituitary tumors occur. The small footprint reflects the small anatomical structure, not a defect.
+- Glioma and no-tumor — diffuse central attention. Heatmaps spread across the central brain rather than tightly localizing. For no-tumor this is expected; for glioma it suggests the model uses broader contextual features alongside the tumor itself.
+### Two distinct failure modes
+Grad-CAM on misclassified cases revealed that the model fails in two fundamentally different ways:
+1. Correct attention, wrong class. In some meningioma-to-glioma errors, the heatmap correctly covers the tumor, but the model still picks the wrong class. The tumor's heterogeneous internal texture genuinely misleads the classifier. This is a feature-learning limitation, not an attention failure.
+2. Wrong attention, wrong class. In some glioma-to-meningioma errors, the heatmap does not cover the tumor at all — the model made a confident decision based on regions outside the lesion. This points to distractor features or image-quality effects.
+This two-mode distinction matters because the two problems need different fixes: the first calls for richer features such as multi-modal MRI, the second calls for attention regularization or input-quality screening.
 
 ---
 
@@ -249,13 +260,42 @@ The model shows reasonable confidence calibration. Average confidence on correct
 
 ## Repository Structure
 
-*Coming soon -- finalized in Day 11 of the project plan.*
+brain-tumor-mri-classifier/
+├── README.md                 Project overview (this file)
+├── LICENSE                   MIT license
+├── requirements.txt          Python dependencies
+├── .gitignore                Excludes data and model weights
+├── app.py                    Gradio demo application
+│
+├── notebooks/
+│   └── brain_tumor_full_pipeline.ipynb
+│
+├── src/
+│   ├── dataset.py            Dataset class and image transforms
+│   ├── model.py              Model construction (EfficientNet-B3)
+│   └── inference.py          Prediction and Grad-CAM utilities
+│
+└── outputs/
+    ├── training curves, confusion matrices, ROC curves
+    ├── Grad-CAM visualizations
+    ├── failure analysis plots
+    ├── per_class_metrics.csv, evaluation_summary.txt
+    └── screenshots/
 
 ---
 
 ## How to Reproduce
 
-*Coming soon -- finalized in Day 11. Will include clone instructions, environment setup, data download steps, and notebook execution order.*
+### 1. Clone the repository
+Use git clone https://github.com/Tanishqarya17/brain-tumor-mri-classifier.git inside a fenced code block, then cd brain-tumor-mri-classifier.
+### 2. Install dependencies
+Run pip install -r requirements.txt in a fenced code block. The project was developed on Google Colab (PyTorch 2.x, Python 3.12, Tesla T4 GPU). A GPU is recommended for training but not required for inference. requirements.txt is intentionally unpinned for cross-environment compatibility; the tested baseline was Gradio 5.50 with the Colab default PyTorch 2.x build.
+### 3. Get the data
+The datasets are not included. Download the Figshare brain tumor dataset and the Br35H no-tumor dataset from the links in Acknowledgments, and place the raw files following the structure expected at the top of the notebook.
+### 4. Run the notebook
+Open notebooks/brain_tumor_full_pipeline.ipynb and run the sections in order. It covers data acquisition, preprocessing, training, evaluation, and Grad-CAM. Patient-level splitting runs inside the notebook; processed data is regenerated rather than downloaded.
+### 5. Use the trained model directly
+To skip training: download stage2_best.pt from the Hugging Face Space files tab, place it in the project root, and run python app.py to launch the same Gradio interface that is deployed live.
 
 ---
 
