@@ -259,9 +259,7 @@ This two-mode distinction matters because the two problems need different fixes:
 ---
 
 ## Repository Structure
-
 brain-tumor-mri-classifier/
-
 ├── README.md                 Project overview (this file)
 ├── LICENSE                   MIT license
 ├── requirements.txt          Python dependencies
@@ -269,17 +267,14 @@ brain-tumor-mri-classifier/
 ├── app.py                    Gradio demo application
 │
 ├── notebooks/
-
 │   └── brain_tumor_full_pipeline.ipynb   End-to-end notebook
 │
 ├── src/
-
 │   ├── dataset.py            Dataset class and image transforms
 │   ├── model.py              Model construction (EfficientNet-B3)
 │   └── inference.py          Prediction and Grad-CAM utilities
 │
 └── outputs/
-
     ├── training curves, confusion matrices, ROC curves
     ├── Grad-CAM visualizations
     ├── failure analysis plots
